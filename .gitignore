@@ -1,0 +1,9 @@
+.env
+.obsidian/workspace.json
+.obsidian/graph.json
+.obsidian/workspace-mobile.json
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/

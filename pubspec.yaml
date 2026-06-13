@@ -1,0 +1,10 @@
+name: sigmagram_server
+description: "Сервер для мого проекту"
+version: 1.0.0
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  postgres: ^3.0.0
+  dotenv: ^4.2.0

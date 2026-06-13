@@ -1,0 +1,37 @@
+import 'package:postgres/postgres.dart';
+import '../../domain/Entities/User.dart';
+
+class UserRepository {
+  final Connection _db;
+
+  UserRepository(this._db);
+
+  Future<void> RegisterUser(User user) async {
+    try {
+      await _db.execute(
+        Sql.named("INSERT INTO users (id, username, time_of_creating, password) VALUES (@id, @username, @time, @password)"),
+        parameters: {'id': user.id, 'username': user.name, 'time': user.TimeOfCreating, 'password': user.Password},
+      );
+      print("Юзер ${user.name} доданий до бази.");
+    } catch (e) {
+      print("Помилка при додаванні юзера: $e");
+    }
+  }
+
+  Future<User?> LoginUser(String username, String password) async {
+    final result = await _db.execute(
+      Sql.named("SELECT * FROM users WHERE username = @username AND password = @password"),
+      parameters: {'username': username, 'password': password},
+    );
+    if (result.isEmpty) {
+      print("Login failed: User not found.");;
+    }
+    return User.fromMap(result.first.toColumnMap());
+  }
+
+  Future<void> CreateUserTable() async {
+    await _db.execute(
+      "CREATE TABLE IF NOT EXISTS users (id VARCHAR PRIMARY KEY, username VARCHAR, time_of_creating TIMESTAMP, password VARCHAR)",
+    );
+  }
+}
