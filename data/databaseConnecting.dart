@@ -17,7 +17,7 @@ Future<Connection> DatabaseConnecting(
       password: Password,
     ),
     settings: ConnectionSettings(
-      sslMode: SslMode.disable, // Ось цей рядок все виправить!
+      sslMode: SslMode.disable,
     ),
   );
   

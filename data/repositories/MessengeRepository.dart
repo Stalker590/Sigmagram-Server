@@ -8,7 +8,7 @@ class MessengeRepository implements IMessengerRepository{
   MessengeRepository(this._db);
 
   @override
-  Future<void> sendMessage(Messenge messenge) async {
+  Future<void> sendMessenge(Messenge messenge) async {
     try {
       await _db.execute(
         Sql.named("INSERT INTO messenges (id, sender_id, time_of_creating, text, chat_id) VALUES (@id, @sender_id, @time, @text, @chat_id)"),
@@ -27,7 +27,6 @@ class MessengeRepository implements IMessengerRepository{
       parameters: {'chat_id': chatId},
     );
 
-    // Перетворюємо результат БД у список об'єктів Messenge
     return result.map((row) => Messenge.fromMap(row.toColumnMap())).toList();
   }
 

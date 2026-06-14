@@ -25,8 +25,8 @@ void main() async {
   await DataBaseInit(db);
 
   final messengeRepository = MessengeRepository(db);
-  final sendMessengeUseCase = SendMessageUseCase(messengeRepository);
-  await sendMessengeUseCase.execute("Hello World!", "123", "123");
+  final sendMessengeUseCase = MessengesUseCases(messengeRepository);
+  await sendMessengeUseCase.SendMessenge("Hello World!", "123", "123");
   print("Message sent successfully.");
 }
 

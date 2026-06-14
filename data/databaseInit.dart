@@ -5,6 +5,6 @@ Future<void> DataBaseInit(Connection db) async {
   await UserRepository(db).CreateUserTable();
   await GroupRepository(db).CreateGroupTable();
   await ChannelRepository(db).CreateChannelTable();
-  await SubscriptionRepository(db).CreateSubscriptionTable();
+  await SubscriberRepository(db).CreateSubscriptionTable();
   await MessengeRepository(db).CreateMessengeTable();
 }
