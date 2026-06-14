@@ -1,6 +1,9 @@
 import 'data/databaseConnecting.dart';
 import 'data/databaseInit.dart';
 import 'package:dotenv/dotenv.dart';
+import 'data/repositories/repositories.dart';
+import 'domain/useCases/usecases.dart';
+import 'domain/Entities/entities.dart';
 
 
 void main() async {
@@ -20,5 +23,10 @@ void main() async {
     Password!,
   );
   await DataBaseInit(db);
+
+  final messengeRepository = MessengeRepository(db);
+  final sendMessengeUseCase = SendMessageUseCase(messengeRepository);
+  await sendMessengeUseCase.execute("Hello World!", "123", "123");
+  print("Message sent successfully.");
 }
 
