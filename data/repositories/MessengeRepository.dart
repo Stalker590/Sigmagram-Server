@@ -1,12 +1,14 @@
 import 'package:postgres/postgres.dart';
 import '../../domain/Entities/Messenge.dart';
+import '../../domain/repositories/i_messenger_repository.dart';
 
-class MessengeRepository {
+class MessengeRepository implements IMessengerRepository{
   final Connection _db;
 
   MessengeRepository(this._db);
 
-  Future<void> SendMessenge(Messenge messenge) async {
+  @override
+  Future<void> sendMessage(Messenge messenge) async {
     try {
       await _db.execute(
         Sql.named("INSERT INTO messenges (id, sender_id, time_of_creating, text, chat_id) VALUES (@id, @sender_id, @time, @text, @chat_id)"),
@@ -18,7 +20,8 @@ class MessengeRepository {
     }
   }
 
-  Future<List<Messenge>> getMessagesByChatId(String chatId) async {
+  @override
+  Future<List<Messenge>> getMessages(String chatId) async {
     final result = await _db.execute(
       Sql.named("SELECT * FROM messenges WHERE chat_id = @chat_id ORDER BY time_of_creating ASC"),
       parameters: {'chat_id': chatId},
