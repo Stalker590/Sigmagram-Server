@@ -1,5 +1,3 @@
-import 'data/databaseConnecting.dart';
-import 'data/databaseInit.dart';
 import 'package:dotenv/dotenv.dart';
 import 'data/repositories/repositories.dart';
 import 'domain/useCases/usecases.dart';
@@ -15,20 +13,21 @@ void main() async {
   final Username = env['USERNAME'];
   final Password = env['PASSWORD'];
 
-  final db = await DatabaseConnecting(
+  final databaseRepository = DataBaseRepository();
+  final connection = await databaseRepository.DatabaseConnecting(
     Host!,
     int.parse(Port!), 
     Database!,
     Username!,
     Password!,
   );
-  await DataBaseInit(db);
+  await databaseRepository.DataBaseInit(connection);
 
-  final messengeRepository = MessengeRepository(db);
-  final channelRepository = ChannelRepository(db);
-  final subscriberRepository = SubscriberRepository(db);
-  final groupRepository = GroupRepository(db);
-  final userRepository = UserRepository(db);
+  final messengeRepository = MessengeRepository(connection);
+  final channelRepository = ChannelRepository(connection);
+  final subscriberRepository = SubscriberRepository(connection);
+  final groupRepository = GroupRepository(connection);
+  final userRepository = UserRepository(connection);
 
   final messengesUseCase = MessengesUseCases(messengeRepository);
   final subscriptionsUseCase = SubscriptionsUseCases(subscriberRepository);
