@@ -3,3 +3,4 @@ export 'CreateChannel.dart';
 export 'GroupUseCases.dart';
 export 'RandomRule.dart';
 export 'UserUseCases.dart';
+export 'SubscriptionsUseCases.dart';

@@ -30,8 +30,14 @@ void main() async {
   final groupRepository = GroupRepository(db);
   final userRepository = UserRepository(db);
 
-  final sendMessengeUseCase = MessengesUseCases(messengeRepository);
-  await sendMessengeUseCase.SendMessenge("Hello World!", "123", "123");
+  final messengesUseCase = MessengesUseCases(messengeRepository);
+  final subscriptionsUseCase = SubscriptionsUseCases(subscriberRepository);
+  final groupUseCase = GroupUseCases(groupRepository);
+  final channelUseCase = ChannelUseCases(channelRepository);
+  final userUseCase = UserUseCases(userRepository);
+  
+  await messengesUseCase.SendMessenge("Hello World!", "123", "123");
+  
   print("Message sent successfully.");
 }
 

@@ -6,7 +6,8 @@ class SubscriptionsUseCases {
   final ISubscriberRepository repository;
 
   Future<void> RegisterSubscription(String SubscriptionId, String SubscriptionOnId) async {
-    await repository.RegisterSubscription(Subscription(MakeRandomNumber(), DateTime.now(), SubscriptionId, SubscriptionOnId));
+    final sub = Subscription(MakeRandomNumber(), DateTime.now(), SubscriptionId, SubscriptionOnId);
+    await repository.RegisterSubscription(sub);
   }
 
   SubscriptionsUseCases(this.repository);
