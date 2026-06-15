@@ -1,11 +1,13 @@
 import 'package:postgres/postgres.dart';
 import '../../domain/Entities/Group.dart';
+import '../../domain/repositories/i_group_repository.dart';
 
-class GroupRepository {
+class GroupRepository implements IGroupRepository {
   final Connection _db;
 
   GroupRepository(this._db);
 
+  @override
   Future<void> CreateGroup(Group group) async {
     try {
       await _db.execute(
@@ -18,7 +20,7 @@ class GroupRepository {
     }
   }
 
-
+  @override
   Future<void> CreateGroupTable() async {
     await _db.execute(
       "CREATE TABLE IF NOT EXISTS groups (id VARCHAR PRIMARY KEY, name VARCHAR, time_of_creating TIMESTAMP, count_of_users INTEGER)",

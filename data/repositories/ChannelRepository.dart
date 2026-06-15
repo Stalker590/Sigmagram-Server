@@ -1,11 +1,13 @@
 import 'package:postgres/postgres.dart';
 import '../../domain/Entities/Channel.dart';
+import '../../domain/repositories/i_channel_repository.dart';
 
-class ChannelRepository {
+class ChannelRepository implements IChannelRepository {
   final Connection _db;
 
   ChannelRepository(this._db);
 
+  @override
   Future<void> CreateChannel(Channel channel) async {
     try {
       await _db.execute(
@@ -18,6 +20,7 @@ class ChannelRepository {
     }
   }
 
+  @override
   Future<void> CreateChannelTable() async {
     await _db.execute(
       "CREATE TABLE IF NOT EXISTS channels (id VARCHAR PRIMARY KEY, name VARCHAR, time_of_creating TIMESTAMP, count_of_users INTEGER, count_of_subscribers INTEGER)",

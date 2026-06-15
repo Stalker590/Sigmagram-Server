@@ -25,6 +25,11 @@ void main() async {
   await DataBaseInit(db);
 
   final messengeRepository = MessengeRepository(db);
+  final channelRepository = ChannelRepository(db);
+  final subscriberRepository = SubscriberRepository(db);
+  final groupRepository = GroupRepository(db);
+  final userRepository = UserRepository(db);
+
   final sendMessengeUseCase = MessengesUseCases(messengeRepository);
   await sendMessengeUseCase.SendMessenge("Hello World!", "123", "123");
   print("Message sent successfully.");
