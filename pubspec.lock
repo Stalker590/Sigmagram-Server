@@ -114,7 +114,7 @@ packages:
     source: hosted
     version: "0.1.2"
   dotenv:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: dotenv
       sha256: "379e64b6fc82d3df29461d349a1796ecd2c436c480d4653f3af6872eccbc90e1"
@@ -258,7 +258,7 @@ packages:
     source: hosted
     version: "1.5.2"
   postgres:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: postgres
       sha256: "123de5cbadc56a7e8d9fa485c780b6b56940b4081f4c74f3a5578682757c299b"
