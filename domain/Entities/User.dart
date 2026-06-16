@@ -17,9 +17,9 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       map['id'] as String,
+      map['password'] as String, 
+      map['time_of_creating'] as DateTime, 
       map['username'] as String, 
-      map['time_of_creating'] as DateTime,
-      map['password'] as String,
     );
   }
 }

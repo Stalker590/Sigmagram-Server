@@ -4,6 +4,12 @@ import 'domain/useCases/usecases.dart';
 import 'domain/Entities/entities.dart';
 
 
+Future<IsAuth> isAuthenticated(String name, String password, UserUseCases userUseCase) async {
+  final isAuth = await userUseCase.loginUser(name, password);
+  return isAuth;
+}
+
+
 void main() async {
   var env = DotEnv(includePlatformEnvironment: true)..load(['.env']);
 
@@ -36,7 +42,11 @@ void main() async {
   final userUseCase = UserUseCases(userRepository);
   
   await messengesUseCase.SendMessenge("Hello World!", "123", "123");
-  
-  print("Message sent successfully.");
-}
+  final userName = "sigmaBahmut";
+  final password = "1234";
+  final isAuth = await isAuthenticated(userName, password, userUseCase);
+  final action = "login";
+
+  print("Login result: ${isAuth.isAuthed}");
+ }
 

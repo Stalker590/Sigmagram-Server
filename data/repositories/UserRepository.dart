@@ -1,6 +1,8 @@
 import 'package:postgres/postgres.dart';
 import '../../domain/Entities/User.dart';
+import '../../domain/Entities/isAuth.dart';
 import '../../domain/repositories/i_user_repository.dart';
+import '../../domain/useCases/usecases.dart';
 
 class UserRepository implements IUserRepository {
   final Connection _db;
@@ -21,16 +23,19 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<User?> LoginUser(String username, String password) async {
+  Future<IsAuth> LoginUser(String username, String password) async {
     final result = await _db.execute(
       Sql.named("SELECT * FROM users WHERE username = @username AND password = @password"),
       parameters: {'username': username, 'password': password},
     );
     if (result.isEmpty) {
-      print("Login failed: User not found.");;
+      print("Login failed: User not found.");
+      return IsAuth(false, null);
     }
-    return User.fromMap(result.first.toColumnMap());
+    return IsAuth(true, User.fromMap(result.first.toColumnMap()));
   }
+
+
 
   @override
   Future<void> CreateUserTable() async {

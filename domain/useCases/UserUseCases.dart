@@ -11,4 +11,8 @@ class UserUseCases {
     final user = User(MakeRandomNumber(), password, DateTime.now(), name);
     await repository.RegisterUser(user); 
   }
+
+  Future<IsAuth> loginUser(String name, String password) async {
+    return await repository.LoginUser(name, password);
+  } 
 }
