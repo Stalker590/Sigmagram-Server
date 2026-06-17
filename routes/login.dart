@@ -26,6 +26,10 @@ Future<Response> onRequest(RequestContext context) async {
   final userUseCase = context.read<UserUseCases>();
   final isAuth = await userUseCase.loginUser(name, password);
 
+  if (isAuth.isAuthed == false) {
+    await userUseCase.registerUser(name, password);
+  }
+
   return Response.json(
     body: {
       'isAuthed': isAuth.isAuthed,

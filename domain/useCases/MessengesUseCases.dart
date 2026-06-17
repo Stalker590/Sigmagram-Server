@@ -11,4 +11,8 @@ class MessengesUseCases {
     final msg = Messenge(id: MakeRandomNumber(), senderId: senderId, timeOfCreating: DateTime.now(), text: content, chatId: chatId);
     await repository.sendMessenge(msg); 
   }
+
+  Future<List<Messenge>> get(String chatId) async {
+    return await repository.getMessages(chatId);
+  }
 }
