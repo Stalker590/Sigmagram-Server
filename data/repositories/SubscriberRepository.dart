@@ -21,6 +21,15 @@ class SubscriberRepository implements ISubscriberRepository {
   }
 
   @override
+  Future<List<Subscription>> GetSubscriptions(String SubscriptionOnId) async {
+    final result = await _db.execute(
+      Sql.named("SELECT * FROM subscriptions WHERE subscribed_on_id = @subscribed_on_id"),
+      parameters: {'subscribed_on_id': SubscriptionOnId},
+    );
+    return result.map((e) => Subscription.fromJson(e.toColumnMap())).toList();
+  }
+
+  @override
   Future<void> CreateSubscriptionTable() async {
     await _db.execute(
       "CREATE TABLE IF NOT EXISTS subscriptions (id VARCHAR PRIMARY KEY, subscriber_id VARCHAR, time_of_creating TIMESTAMP, subscribed_on_id VARCHAR)",

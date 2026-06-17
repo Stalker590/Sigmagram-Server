@@ -23,7 +23,7 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   final messengesUseCase = context.read<MessengesUseCases>();
-  final messages = await messengesUseCase.get(nameId);
+  final messages = await messengesUseCase.getMessages(nameId);
 
   return Response.json(
     body: {'success': true, 'messages': messages},

@@ -10,5 +10,9 @@ class SubscriptionsUseCases {
     await repository.RegisterSubscription(sub);
   }
 
+  Future<List<Subscription>> GetSubscriptions(String SubscriptionOnId) async {
+    return await repository.GetSubscriptions(SubscriptionOnId);
+  }
+
   SubscriptionsUseCases(this.repository);
 }

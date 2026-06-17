@@ -12,7 +12,7 @@ class MessengesUseCases {
     await repository.sendMessenge(msg); 
   }
 
-  Future<List<Messenge>> get(String chatId) async {
+  Future<List<Messenge>> getMessages(String chatId) async {
     return await repository.getMessages(chatId);
   }
 }

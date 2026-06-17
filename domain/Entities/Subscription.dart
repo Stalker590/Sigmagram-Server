@@ -14,4 +14,11 @@ class Subscription {
     'subscribedOnId': SubscribedOnId,
     'time': TimeOfCreating,
   };
+
+  factory Subscription.fromJson(Map<String, dynamic> json) => Subscription(
+        json['id'] as String,
+        DateTime.parse(json['time'] as String),
+        json['subscriberId'] as String,
+        json['subscribedOnId'] as String,
+      );
 }
