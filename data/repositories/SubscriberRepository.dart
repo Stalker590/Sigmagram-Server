@@ -21,10 +21,10 @@ class SubscriberRepository implements ISubscriberRepository {
   }
 
   @override
-  Future<List<Subscription>> GetSubscriptions(String SubscriptionOnId) async {
+  Future<List<Subscription>> GetSubscriptions(String SubscriberId, String SubscriptionOnId) async {
     final result = await _db.execute(
-      Sql.named("SELECT * FROM subscriptions WHERE subscribed_on_id = @subscribed_on_id"),
-      parameters: {'subscribed_on_id': SubscriptionOnId},
+      Sql.named("SELECT * FROM subscriptions WHERE subscriber_id = @subscriber_id AND subscribed_on_id = @subscribed_on_id"),
+      parameters: {'subscriber_id': SubscriberId, 'subscribed_on_id': SubscriptionOnId},
     );
     return result.map((e) => Subscription.fromJson(e.toColumnMap())).toList();
   }
