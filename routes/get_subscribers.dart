@@ -14,17 +14,16 @@ Future<Response> onRequest(RequestContext context) async {
 
   final body = await request.json() as Map<String, dynamic>;
   final SubscriberId = body['SubscriberId'] as String?;
-  final SubscriptionOnId = body['SubscriptionOnId'] as String?;
 
-  if (SubscriptionOnId == null) {
+  if (SubscriberId == null) {
     return Response.json(
       statusCode: 400,
-      body: {'error': 'Missing required field: SubscriptionOnId'},
+      body: {'error': 'Missing required field: SubscriberId'},
     );
   }
 
   final subscriptionsUseCase = context.read<SubscriptionsUseCases>();
-  final subscriptions = await subscriptionsUseCase.GetSubscriptions(SubscriberId!, SubscriptionOnId!);
+  final subscriptions = await subscriptionsUseCase.GetSubscriptions(SubscriberId!);
 
   return Response.json(
     body: {'success': true, 'subscriptions': subscriptions},
