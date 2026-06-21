@@ -7,8 +7,13 @@ class GroupUseCases {
 
   GroupUseCases(this.repository);
 
-  Future<void> createGroup(String name) async {
+  Future<Group> createGroup(String name) async {
     final group = Group(MakeRandomNumber(), name, DateTime.now(), 0);
     await repository.CreateGroup(group);
+    return group;
+  }
+
+  Future<Group?> findGroupById(String id) {
+    return repository.FindGroupById(id);
   }
 }

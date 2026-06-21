@@ -23,16 +23,23 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   final groupUseCase = context.read<GroupUseCases>();
-  try{
-    await groupUseCase.createGroup(name);
-  }catch(e){
+  try {
+    final group = await groupUseCase.createGroup(name);
+    return Response.json(
+      body: {
+        'success': true,
+        'message': 'Group created successfully',
+        'chat': {
+          'id': group.id,
+          'name': group.name,
+          'type': 'group',
+        },
+      },
+    );
+  } catch (e) {
     return Response.json(
       statusCode: 500,
       body: {'error': e.toString()},
     );
   }
-
-  return Response.json(
-    body: {'success': true, 'message': 'Group created successfully'},
-  );
 }

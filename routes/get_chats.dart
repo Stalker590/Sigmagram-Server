@@ -18,8 +18,19 @@ Future<Response> onRequest(RequestContext context) async {
   if (authError != null) return authError;
 
   final subscriptionsUseCase = context.read<SubscriptionsUseCases>();
-  final subscriptions =
-      await subscriptionsUseCase.GetSubscriptions(user!.id);
+  final groupUseCase = context.read<GroupUseCases>();
+  final subscriptions = await subscriptionsUseCase.GetSubscriptions(user!.id);
+
+  final subscriptionChats = await Future.wait(
+    subscriptions.map((s) async {
+      final group = await groupUseCase.findGroupById(s.SubscribedOnId);
+      return {
+        'id': s.SubscribedOnId,
+        'name': group?.name ?? s.SubscribedOnId,
+        'type': group == null ? 'subscription' : 'group',
+      };
+    }),
+  );
 
   final chats = <Map<String, dynamic>>[
     {
@@ -27,13 +38,7 @@ Future<Response> onRequest(RequestContext context) async {
       'name': 'Sigmagram Global',
       'type': 'global',
     },
-    ...subscriptions.map(
-      (s) => {
-        'id': s.SubscribedOnId,
-        'name': s.SubscribedOnId,
-        'type': 'subscription',
-      },
-    ),
+    ...subscriptionChats,
   ];
 
   return Response.json(
