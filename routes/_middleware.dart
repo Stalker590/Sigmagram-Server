@@ -6,17 +6,17 @@ import '../domain/useCases/usecases.dart';
 
 Handler middleware(Handler handler) {
   return handler
-      .use(_provideDatabaseConnection())
+      .use(_provideMessengesUseCases())
+      .use(_provideSubscriptionsUseCases())
+      .use(_provideGroupUseCases())
+      .use(_provideChannelUseCases())
+      .use(_provideUserUseCases())
       .use(_provideMessengeRepository())
       .use(_provideChannelRepository())
       .use(_provideSubscriberRepository())
       .use(_provideGroupRepository())
       .use(_provideUserRepository())
-      .use(_provideMessengesUseCases())
-      .use(_provideSubscriptionsUseCases())
-      .use(_provideGroupUseCases())
-      .use(_provideChannelUseCases())
-      .use(_provideUserUseCases());
+      .use(_provideDatabaseConnection());
 }
 
 Middleware _provideDatabaseConnection() {

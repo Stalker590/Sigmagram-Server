@@ -17,22 +17,26 @@ Future<Response> onRequest(RequestContext context) async {
   final (user, authError) = await authenticate(context, body);
   if (authError != null) return authError;
 
-  final chatId = body['chatId'] as String?;
-  if (chatId == null) {
-    return Response.json(
-      statusCode: 400,
-      body: {'error': 'Missing required field: chatId'},
-    );
-  }
+  final subscriptionsUseCase = context.read<SubscriptionsUseCases>();
+  final subscriptions =
+      await subscriptionsUseCase.GetSubscriptions(user!.id);
 
-  final messengesUseCase = context.read<MessengesUseCases>();
-  final messages = await messengesUseCase.getMessages(chatId);
+  final chats = <Map<String, dynamic>>[
+    {
+      'id': 'global',
+      'name': 'Sigmagram Global',
+      'type': 'global',
+    },
+    ...subscriptions.map(
+      (s) => {
+        'id': s.SubscribedOnId,
+        'name': s.SubscribedOnId,
+        'type': 'subscription',
+      },
+    ),
+  ];
 
   return Response.json(
-    body: {
-      'success': true,
-      'messages': messages.map((m) => m.toMap()).toList(),
-      'userId': user!.id,
-    },
+    body: {'success': true, 'chats': chats},
   );
 }
